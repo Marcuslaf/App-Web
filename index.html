@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Gerenciador de Estoque</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
+    <script type="text/javascript" src="./index.js" defer=""></script>
+    <link rel="stylesheet" href="./index.css">
+  </head>
+
+  <body>
+    <h1>Gerenciador de Estoque</h1>
+    <input type="text" id="item" placeholder="Nome do item">
+    <input type="number" id="quantidade" placeholder="Quantidade">
+    <button onclick="adicionarItem()">Adicionar Item</button>
+    <table id="estoque">
+      <tbody>
+        <tr>
+          <th>Item</th>
+          <th>Quantidade</th>
+          <th>Ações</th>
+        </tr>
+      </tbody>
+    </table>
+
+    <script>
+      let estoque = [];
+
+      function adicionarItem() {
+        const item = document.getElementById('item').value;
+        const quantidade = document.getElementById('quantidade').value;
+
+        estoque.push({
+          item,
+          quantidade
+        });
+
+        atualizarTabela();
+      }
+
+      function deletarItem(index) {
+        estoque.splice(index, 1);
+
+        atualizarTabela();
+      }
+
+      function atualizarTabela() {
+        const tabela = document.getElementById('estoque');
+        tabela.innerHTML = '<tr><th>Item</th><th>Quantidade</th><th>Ações</th></tr>';
+
+        estoque.forEach((estoqueItem, index) => {
+          const linha = document.createElement('tr');
+
+          linha.innerHTML = `
+                    <td>${estoqueItem.item}</td>
+                    <td>${estoqueItem.quantidade}</td>
+                    <td><button onclick="deletarItem(${index})">Deletar</button></td>
+                `;
+
+          tabela.appendChild(linha);
+        });
+      }
+    </script>
+
+
+  </body>
+
+</html>
